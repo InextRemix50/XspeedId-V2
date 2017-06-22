@@ -46,6 +46,6 @@ public class PackagingServiceTests {
 		List<Packet> packets = packagingService.packageArticles(articles);
 
         // assert statements
-		assertEquals("Assert that number of packet are 8", 8, packets.size());
+		assertEquals("Bad packets list size found", 8, packets.size());
     }
 }
