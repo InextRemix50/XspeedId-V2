@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.voyages.sncf.exceptions.MalformatedArticleListException;
+import com.voyages.sncf.logger.XspeedItLogger;
 import com.voyages.sncf.services.XspeedItService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,9 +19,14 @@ public class XspeedItServiceTests {
 
 	@Autowired
 	XspeedItService xspeedItService;
+
+	@Autowired
+	XspeedItLogger logger;
 	
 	@Test
 	public void testProceedPackaging() throws MalformatedArticleListException {
+		
+		logger.info("Proceed testProceedPackaging");
 		
 		// The article test list : 163841689525773
 		String articlesEntered = "163841689525773";
@@ -33,6 +39,8 @@ public class XspeedItServiceTests {
 	
 	@Test
 	public void testBadArticlesEntered() throws MalformatedArticleListException {
+		
+		logger.info("Proceed testBadArticlesEntered");
 		
 		try {
 			// Bad entered list
@@ -47,6 +55,8 @@ public class XspeedItServiceTests {
 	
 	@Test
 	public void testEmptyArticlesEntered() throws MalformatedArticleListException {
+		
+		logger.info("Proceed testEmptyArticlesEntered");
 		
 		try {
 			// Bad entered list

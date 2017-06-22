@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.voyages.sncf.beans.Article;
 import com.voyages.sncf.beans.Packet;
+import com.voyages.sncf.logger.XspeedItLogger;
 import com.voyages.sncf.services.PackagingService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,8 +23,13 @@ public class PackagingServiceTests {
 	@Autowired
 	PackagingService packagingService;
 	
+	@Autowired
+	XspeedItLogger logger;
+	
 	@Test
 	public void testOptimizedPackaging() {
+		
+		logger.info("Proceed testOptimizedPackaging");
 		
 		// The article test list : 163841689525773
 		List<Article> articles = new ArrayList<>();
@@ -51,6 +57,8 @@ public class PackagingServiceTests {
 	
 	@Test
 	public void testEmptyPackaging() {
+		
+		logger.info("Proceed testEmptyPackaging");
 		
 		// The empty article test list
 		List<Article> articles = new ArrayList<>();
