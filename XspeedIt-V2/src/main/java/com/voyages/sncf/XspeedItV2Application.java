@@ -29,6 +29,7 @@ public class XspeedItV2Application implements CommandLineRunner {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter your list of articles to package :");
 		String articlesEntered = scanner.nextLine();
+		scanner.close();
 		
 		String result = xspeedItService.proceedPackaging(articlesEntered);
 		

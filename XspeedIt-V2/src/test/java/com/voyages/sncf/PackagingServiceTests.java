@@ -1,6 +1,6 @@
 package com.voyages.sncf;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,15 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.voyages.sncf.beans.Article;
 import com.voyages.sncf.beans.Packet;
 import com.voyages.sncf.services.PackagingService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = XspeedItV2Application.class)
 public class PackagingServiceTests {
 
 	@Autowired
@@ -46,6 +46,6 @@ public class PackagingServiceTests {
 		List<Packet> packets = packagingService.packageArticles(articles);
 
         // assert statements
-        assertThat(packets.size()).isEqualTo(8);
+		assertEquals("Assert that number of packet are 8", 8, packets.size());
     }
 }
