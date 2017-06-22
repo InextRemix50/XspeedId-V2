@@ -16,23 +16,23 @@ public class XspeedItV2Application implements CommandLineRunner {
 
 	@Autowired
 	XspeedItService xspeedItService;
-	
+
 	@Autowired
 	XspeedItLogger logger;
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(XspeedItV2Application.class, args);
 	}
-    
-    @Override
+
+	@Override
 	public void run(String... args) throws MalformatedArticleListException {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter your list of articles to package :");
 		String articlesEntered = scanner.nextLine();
 		scanner.close();
-		
+
 		String result = xspeedItService.proceedPackaging(articlesEntered);
-		
+
 		logger.info("Packaged articles  :".concat(result));
 	}
 }

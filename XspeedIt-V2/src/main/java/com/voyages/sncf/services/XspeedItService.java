@@ -1,8 +1,10 @@
 package com.voyages.sncf.services;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +21,13 @@ import com.voyages.sncf.logger.XspeedItLogger;
  */
 @Service
 public class XspeedItService {
-	
+
 	@Autowired
 	PackagingService packagingService;
-	
+
 	@Autowired
 	XspeedItLogger logger;
-	
+
 	/**
 	 * Proceed packaging of article in argument
 	 * 
@@ -33,52 +35,50 @@ public class XspeedItService {
 	 * @return
 	 * @throws MalformatedArticleListException
 	 */
-	public String proceedPackaging(String articlesEntered) throws MalformatedArticleListException {
-		
-		logger.info("Proceed packaging for articles : ".concat(articlesEntered));
-		
+	public String proceedPackaging(String articlesEntered)
+			throws MalformatedArticleListException {
+
+		logger.info(
+				"Proceed packaging for articles : ".concat(articlesEntered));
+
 		List<Article> articles = createArticle(articlesEntered);
-		
+
 		List<Packet> packets = packagingService.packageArticles(articles);
-		
+
 		return createResult(packets);
 	}
-	
+
 	// Check if all articles are available (mean represent a valid integer)
 	// And create list of articles
-	private List<Article> createArticle(String articlesEntered) throws MalformatedArticleListException {
-		
+	private List<Article> createArticle(String articlesEntered)
+			throws MalformatedArticleListException {
+
 		logger.info("Check and create articles");
-		
-		String[] articlesAsString = articlesEntered.split(XspeedItConstants.ARTICLE_SEPARATOR);
-		List<Article> articles = new ArrayList<>();
-		
-		for(String articleAsString : articlesAsString) {
-			try {
-				articles.add(new Article(Integer.parseInt(articleAsString)));
-			} catch(NumberFormatException e) {
-				throw new MalformatedArticleListException("Entered articles list is not valid");
-			}
+
+		List<String> articlesAsString = Arrays.asList(
+				articlesEntered.split(XspeedItConstants.ARTICLE_SEPARATOR));
+		List<Article> articles;
+		try {
+			articles = articlesAsString.stream()
+					.map(x -> new Article(Integer.parseInt(x)))
+					.collect(Collectors.toList());
+		} catch (NumberFormatException e) {
+			throw new MalformatedArticleListException(
+					"Entered articles list is not valid");
 		}
-		
+
 		return articles;
 	}
-	
-	// Create a result (as String) that represent all packets and articles (separating by /)
+
+	// Create a result (as String) that represent all packets and articles
+	// (separating by /)
 	private String createResult(List<Packet> packets) {
-		
+
 		logger.info("Create result from created packets");
-		
-		StringBuilder result = new StringBuilder();
-		
-		for(Packet packet : packets) {
-			result.append(packet.toString());
-			result.append(XspeedItConstants.PACKET_SEPARATOR);
-		}
-		
-		// Remove last PACKET_SEPARATOR
-		result.setLength(Math.max(result.length() - 1, 0));
-		
-		return result.toString();
+
+		List<String> result = packets.stream().map(x -> x.toString())
+				.collect(Collectors.toList());
+
+		return StringUtils.join(result, XspeedItConstants.PACKET_SEPARATOR);
 	}
 }

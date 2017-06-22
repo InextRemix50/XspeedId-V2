@@ -22,15 +22,15 @@ public class PackagingServiceTests {
 
 	@Autowired
 	PackagingService packagingService;
-	
+
 	@Autowired
 	XspeedItLogger logger;
-	
+
 	@Test
 	public void testOptimizedPackaging() {
-		
+
 		logger.info("Proceed testOptimizedPackaging");
-		
+
 		// The article test list : 163841689525773
 		List<Article> articles = new ArrayList<>();
 		articles.add(new Article(1));
@@ -48,24 +48,24 @@ public class PackagingServiceTests {
 		articles.add(new Article(7));
 		articles.add(new Article(7));
 		articles.add(new Article(3));
-		
+
 		List<Packet> packets = packagingService.packageArticles(articles);
 
-        // assert statements
+		// assert statements
 		assertEquals("Bad packets list size found", 8, packets.size());
-    }
-	
+	}
+
 	@Test
 	public void testEmptyPackaging() {
-		
+
 		logger.info("Proceed testEmptyPackaging");
-		
+
 		// The empty article test list
 		List<Article> articles = new ArrayList<>();
-		
+
 		List<Packet> packets = packagingService.packageArticles(articles);
 
-        // assert statements
+		// assert statements
 		assertEquals("Bad packets list size found", 0, packets.size());
-    }
+	}
 }

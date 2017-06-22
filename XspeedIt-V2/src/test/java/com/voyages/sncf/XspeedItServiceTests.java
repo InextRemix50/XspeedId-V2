@@ -22,50 +22,52 @@ public class XspeedItServiceTests {
 
 	@Autowired
 	XspeedItLogger logger;
-	
+
 	@Test
 	public void testProceedPackaging() throws MalformatedArticleListException {
-		
+
 		logger.info("Proceed testProceedPackaging");
-		
+
 		// The article test list : 163841689525773
 		String articlesEntered = "163841689525773";
-		
+
 		String result = xspeedItService.proceedPackaging(articlesEntered);
 
-        // assert statements
+		// assert statements
 		assertEquals("Bad result found", "91/82/81/73/73/64/6/55", result);
-    }
-	
+	}
+
 	@Test
-	public void testBadArticlesEntered() throws MalformatedArticleListException {
-		
+	public void testBadArticlesEntered()
+			throws MalformatedArticleListException {
+
 		logger.info("Proceed testBadArticlesEntered");
-		
+
 		try {
 			// Bad entered list
 			String articlesEntered = "abc";
-			
+
 			xspeedItService.proceedPackaging(articlesEntered);
 			fail("MalformatedArticleListException must be throw");
-		} catch(MalformatedArticleListException e) {
-			
+		} catch (MalformatedArticleListException e) {
+
 		}
-    }
-	
+	}
+
 	@Test
-	public void testEmptyArticlesEntered() throws MalformatedArticleListException {
-		
+	public void testEmptyArticlesEntered()
+			throws MalformatedArticleListException {
+
 		logger.info("Proceed testEmptyArticlesEntered");
-		
+
 		try {
 			// Bad entered list
 			String articlesEntered = "4786453 48786746";
-			
+
 			xspeedItService.proceedPackaging(articlesEntered);
 			fail("MalformatedArticleListException must be throw");
-		} catch(MalformatedArticleListException e) {
-			
+		} catch (MalformatedArticleListException e) {
+
 		}
-    }
+	}
 }
