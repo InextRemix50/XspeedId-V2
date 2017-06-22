@@ -48,4 +48,16 @@ public class PackagingServiceTests {
         // assert statements
 		assertEquals("Bad packets list size found", 8, packets.size());
     }
+	
+	@Test
+	public void testEmptyPackaging() {
+		
+		// The empty article test list
+		List<Article> articles = new ArrayList<>();
+		
+		List<Packet> packets = packagingService.packageArticles(articles);
+
+        // assert statements
+		assertEquals("Bad packets list size found", 0, packets.size());
+    }
 }
